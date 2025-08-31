@@ -1,0 +1,7 @@
+service,region,usage_hours,usage_type,cost_usd,emission_kg
+EC2,us-east-1,100,OnDemand,20.0,5.1
+Lambda,us-east-1,2000000,Requests,5.0,1.2
+S3,eu-west-1,50,StorageGB-Mo,3.5,0.6
+RDS,ap-south-1,60,OnDemand,12.0,3.4
+CloudFront,us-west-2,150,DataTransfer,7.5,2.2
+DynamoDB,us-east-2,80,ReadCapacityUnit,4.8,1.1

@@ -1,0 +1,10 @@
+{
+    "service": {
+        "name": "EC2",
+        "emission_kg": 5.1
+    },
+    "region": {
+        "name": "us-east-1",
+        "emission_kg": 5.1
+    }
+}

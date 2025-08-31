@@ -1,0 +1,6 @@
+usage_type,avg_carbon_per_hour,total_usage_hours
+OnDemand,0.05383333333333333,160
+DataTransfer,0.014666666666666668,150
+ReadCapacityUnit,0.013750000000000002,80
+StorageGB-Mo,0.012,50
+Requests,6e-07,2000000

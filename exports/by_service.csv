@@ -1,0 +1,7 @@
+service,total_cost_usd,total_emission_kg
+CloudFront,7.5,2.2
+DynamoDB,4.8,1.1
+EC2,20.0,5.1
+Lambda,5.0,1.2
+RDS,12.0,3.4
+S3,3.5,0.6
