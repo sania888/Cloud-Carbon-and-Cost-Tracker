@@ -17,7 +17,7 @@ Key Features:
 import os
 import json
 import pandas as pd
-from calculator import calculate_metrics
+from legacy.calculator import calculate_metrics
 
 def ensure_export_folder(export_folder: str):
     """Create the export folder if it doesn't exist."""

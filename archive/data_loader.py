@@ -1,5 +1,7 @@
 import pandas as pd
 import os
+
+
 def load_mock_data(file_path="mock_data/aws_billing_mock.csv"):
     """
     Lock mock AWS billing data from CSV file.
@@ -21,6 +23,7 @@ def load_mock_data(file_path="mock_data/aws_billing_mock.csv"):
         
     print(f"Data Loaded {len(df)} records from {file_path}")
     return df
+
 
 if __name__== "__main__":
     df = load_mock_data()

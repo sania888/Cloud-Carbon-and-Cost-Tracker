@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cloud Cost & Carbon Tracker</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+    <div class="container">
+        <h1>Cloud Cost & Carbon Tracker</h1>
+
+
+        <!--- Filters + Buttons-->
+        <div class="controls">
+            <input type="text" id="region" placeholder="Region (e.g. us-east-1)">
+            <input type="text" id="service" placeholder="Service (e.g. EC2)">
+            <button onclick="loadData()">Load Data</button>
+            <button onclick="downloadCSV()">Download CSV</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+        </div>
+
+        <!---- Summary -->
+        <div class="summary">
+            <div class="card">
+                <h3>Total Cost</h3>
+                <p id="total-cost">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Emissions</h3>
+                <p id="total-emissions">0</p>
+            </div>
+        </div>
+
+        <p id="loading" style="display:none;">Loading Data...</p>
+        <p id="no-data" style="display:none;">No Data Found!</p>
+        
+        <!-- Table -->
+        <table id="data-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Region</th>
+                    <th>Usage Hours</th>
+                    <th>Usage Type</th>
+                    <th>Cost</th>
+                    <th>Emissions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+
+    </div>
+        
+
+        <!-- <div id="summary">
+            <h3>Summary</h3>
+            <p>Total cost: <span id="total-cost">0</span></p>
+            <p>Total emissions: <span id="total-emissions">0</span></p>
+        </div> -->
+
+        <!-- <div>
+            <input type="text" id="region" placeholder="Enter region (e. g. us-east-1)">
+            <input type="text" id="service" placeholder="Enter service (e. g. EC2)">
+            <button onclick="loadData()">Load Data</button>
+        </div> -->
+
+        <!-- <div>
+            <button onclick="downloadCSV()">Download CSV</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+        </div> -->
+
+        <!-- <table border="1" id="data-table">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Region</th>
+                    <th>Usage Hours</th>
+                    <th>Usage Type</th>
+                    <th>Cost</th>
+                    <th>Emissions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table> -->
+        <script src="script.js"></script>
+        
+    </body>
+</html>
