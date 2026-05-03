@@ -2,7 +2,7 @@ async function loadData() {
     const region = document.getElementById("region").value;
     const service = document.getElementById("service").value;
 
-    let url =  "http://127.0.0.1:8000/usage/";
+    let url =  "https://cloud-carbon-and-cost-tracker.onrender.com";
 
     const params = [];
     if (region) params.push(`region=${region}`);
