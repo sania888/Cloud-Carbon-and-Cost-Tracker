@@ -2,7 +2,7 @@ async function loadData() {
     const region = document.getElementById("region").value;
     const service = document.getElementById("service").value;
 
-    let url =  "https://cloud-carbon-and-cost-tracker.onrender.com";
+    const API_BASE =  "https://cloud-carbon-and-cost-tracker.onrender.com";
 
     const params = [];
     if (region) params.push(`region=${region}`);
@@ -22,7 +22,7 @@ async function loadData() {
     tableBody.innerHTML = ""; // Clear old data
 
     
-    const response = await fetch(url); // FETCH DATA
+    const response = await fetch(`${API_BASE}/usage/all`); // FETCH DATA
     const result = await response.json();  // THEN PARSE
 
     // hid loading
@@ -46,7 +46,7 @@ async function loadData() {
         tableBody.appendChild(tr);
     });
 
-    let summaryUrl = "http://127.0.0.1:8000/usage/summary";
+    let summaryUrl = `${API_BASE}/usage/summary`;
 
     if (params.length > 0) {
         summaryUrl += "?" + params.join("&");
@@ -83,7 +83,7 @@ function getQueryParams() {
 
 function downloadCSV() {
     const query = getQueryParams();
-    const url = `http://127.0.0.1:8000/usage/export${query}`;
+    const url = `${API_BASE}/usage/export${query}`;
 
     window.open(url, "_blank");
 }
@@ -91,7 +91,7 @@ function downloadCSV() {
 
 function downloadPDF() {
     const query = getQueryParams();
-    const url = `http://127.0.0.1:8000/usage/export/pdf${query}`;
+    const url = `${API_BASE}/usage/export/pdf${query}`;
 
     window.open(url, "_blank");
 }
