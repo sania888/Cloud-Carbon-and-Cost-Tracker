@@ -1,13 +1,14 @@
+const API_BASE =  "https://cloud-carbon-and-cost-tracker.onrender.com";
+
 async function loadData() {
     const region = document.getElementById("region").value;
     const service = document.getElementById("service").value;
-
-    const API_BASE =  "https://cloud-carbon-and-cost-tracker.onrender.com";
 
     const params = [];
     if (region) params.push(`region=${region}`);
     if (service) params.push(`service=${service}`);
 
+    let url = `${API_BASE}/usage/all`;
     if (params.length > 0) {
         url += "?" + params.join("&");
     }
@@ -22,11 +23,12 @@ async function loadData() {
     tableBody.innerHTML = ""; // Clear old data
 
     
-    const response = await fetch(`${API_BASE}/usage/all`); // FETCH DATA
+    const response = await fetch(url); // FETCH DATA
     const result = await response.json();  // THEN PARSE
 
     // hid loading
     loading.style.display = "none";
+
     if (!result.data || result.data.length === 0) {
         noData.style.display = "block";
         return;
@@ -47,7 +49,6 @@ async function loadData() {
     });
 
     let summaryUrl = `${API_BASE}/usage/summary`;
-
     if (params.length > 0) {
         summaryUrl += "?" + params.join("&");
     }
