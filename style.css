@@ -101,3 +101,12 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #eef3ff;
 }
+
+
+.charts-section {
+    margin-top: 30px;
+}
+
+.charts-section h2 {
+    margin-bottom: 15px;
+}
