@@ -1,5 +1,22 @@
 import random
 
+SERVICE_RATES = {
+    "EC2": 0.2,          # $ per hour
+    "Lambda": 0.0000002, # per request (simulated)
+    "S3": 0.02,
+    "RDS": 0.25,
+    "CloudFront": 0.15,
+    "DynamoDB": 0.1
+}
+
+EMISSION_FACTOR = {
+    "EC2": 0.05,
+    "Lambda": 0.0000001,
+    "S3": 0.01,
+    "RDS": 0.04,
+    "CloudFront": 0.03,
+    "DynamoDB": 0.02
+}
 
 def generate_dynamic_data(record):
     """"
@@ -37,16 +54,19 @@ def generate_dynamic_data(record):
     
 
     usage_growth = usage * factor
+    new_usage = usage + usage_growth
     
-    # cost proportional to usage
-    cost_growth = cost * factor
+    # Get service rate
+    rate = SERVICE_RATES.get(service, 0.1)
+    emission_factor = EMISSION_FACTOR.get(service, 0.02)
     
-    # emission proportional to usage
-    emission_growth = emission * factor
+    # Calculate new values based on usage
+    new_cost = new_cost = new_usage * rate
+    new_emission = new_usage * emission_factor
     
     return {
         **record,
-        "usage_hours": round(usage_growth, 2),
-        "cost_usd": round(cost_growth, 2),
-        "emission_kg": round(emission_growth, 2)
+        "usage_hours": round(new_usage, 2),
+        "cost_usd": round(new_cost, 2),
+        "emission_kg": round(new_emission, 2)
     }
