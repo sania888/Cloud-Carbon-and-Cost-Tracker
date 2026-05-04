@@ -35,12 +35,6 @@ async function loadData() {
         costs.push(item.cost_usd);
     });
 
-    const emissions = [];
-
-    result.data.forEach(item => {
-        emissions.push(item.emission_kg);
-    });
-
     // plotly bar chart (Cost by service)
     const plotData = [
         {
@@ -57,6 +51,12 @@ async function loadData() {
     };
 
     Plotly.newPlot("cost-chart", plotData, layout);
+
+    const emissions = [];
+
+    result.data.forEach(item => {
+        emissions.push(item.emission_kg);
+    });
 
     const emissionPlotData = [
         {
