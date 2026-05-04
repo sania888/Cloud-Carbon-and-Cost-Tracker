@@ -26,6 +26,15 @@ async function loadData() {
     const response = await fetch(url); // FETCH DATA
     const result = await response.json();  // THEN PARSE
 
+    // prepare plot data
+    const services = [];
+    const costs = [];
+
+    result.data.forEach(item => {
+        services.push(item.service);
+        costs.push(item.cost_usd);
+    });
+
     // hid loading
     loading.style.display = "none";
 
