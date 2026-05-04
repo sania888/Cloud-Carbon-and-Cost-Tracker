@@ -26,6 +26,37 @@ async function loadData() {
     const response = await fetch(url); // FETCH DATA
     const result = await response.json();  // THEN PARSE
 
+    // INSIGHTS LOGIC
+    let maxCostService = "";
+    let maxCost = 0;
+
+    let maxEmissionService = "";
+    let maxEmission = 0;
+
+    result.data.forEach(item => {
+        // highest cose
+        if (item.cost_usd > maxCost) {
+            maxCost = item.cost_usd;
+            maxCostService = item.service;
+        }
+
+        // highest emission
+        if (item.emission_kg > maxEmission) {
+            maxEmission = item.emission_kg;
+            maxEmissionService = item.service;
+        }
+    });
+
+    const totalServices = result.data.length;
+
+    const insightList = document.getElementById("insights-list");
+
+    insightList.innerHTML = `
+        <li>Highest Cost Service: ${maxCostService} ($${maxCost})</li>
+        <li>Highest Emission Service: ${maxEmissionService} (${maxEmission} kg)</li>
+        <li>Total Services Used: ${totalServices}</li>
+    `;
+
     // prepare plot data
     const services = [];
     const costs = [];
