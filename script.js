@@ -35,6 +35,24 @@ async function loadData() {
         costs.push(item.cost_usd);
     });
 
+
+    // plotly bar chart (Cost by service)
+    const plotData = [
+        {
+            x: services,
+            y: costs,
+            type: "bar"
+        }
+    ];
+
+    const layout = {
+        title: "Cost by Service Plot",
+        xaxis: { title: "Service" },
+        yaxis: { title: "Cost (USD)" }
+    };
+
+    Plotly.newPlot("cost-chart", plotData, layout);
+
     // hid loading
     loading.style.display = "none";
 
