@@ -1,4 +1,7 @@
 import random
+import time
+
+LAST_UPDATE = time.time()
 
 SERVICE_RATES = {
     "EC2": 0.2,          # $ per hour
@@ -22,6 +25,13 @@ def generate_dynamic_data(record):
     """"
         Takes a single record and return updated values
     """
+    global LAST_UPDATE
+    
+    current_time = time.time()
+    time_diff = current_time - LAST_UPDATE
+    
+    # Normalize time factor (convert seconds -> growth multiplier)
+    time_factor = time_diff / 60 
     
     usage = record["usage_hours"]
     cost = record["cost_usd"]
@@ -53,7 +63,7 @@ def generate_dynamic_data(record):
         factor = random.uniform(0.01, 0.05)
     
 
-    usage_growth = usage * factor
+    usage_growth = usage * factor * time_factor
     new_usage = usage + usage_growth
     
     # Get service rate
@@ -70,3 +80,5 @@ def generate_dynamic_data(record):
         "cost_usd": round(new_cost, 2),
         "emission_kg": round(new_emission, 2)
     }
+    
+    LAST_UPDATE = current_time
