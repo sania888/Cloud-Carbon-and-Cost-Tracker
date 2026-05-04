@@ -1,6 +1,7 @@
 const API_BASE =  "https://cloud-carbon-and-cost-tracker.onrender.com";
 
 async function loadData() {
+
     const region = document.getElementById("region").value;
     const service = document.getElementById("service").value;
 
@@ -143,9 +144,9 @@ async function loadData() {
     const insightList = document.getElementById("insights-list");
 
     insightList.innerHTML = `
-        <li>Highest Cost Service: ${maxCostService} ($${maxCost})</li>
-        <li>Highest Emission Service: ${maxEmissionService} (${maxEmission} kg)</li>
-        <li>Total Services Used: ${totalServices}</li>
+        <li><strong>Highest Cost Service:</strong> ${maxCostService} ($${maxCost})</li>
+        <li><strong>Highest Emission Service:</strong> ${maxEmissionService} (${maxEmission} kg)</li>
+        <li><strong>Total Services Used:</strong> ${totalServices}</li>
     `;
 }
 
@@ -177,3 +178,11 @@ function downloadPDF() {
 
     window.open(url, "_blank");
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleBtn = document.getElementById("theme-toggle");
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+});

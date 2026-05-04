@@ -5,6 +5,46 @@ body{
     padding: 0;
 }
 
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* DARK MODE TABLE FIX */
+body.dark-mode table {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode th {
+    background-color: #2c2c2c;
+    color: #ffffff;
+}
+
+body.dark-mode td {
+    border-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode tr {
+    border-bottom: 1px solid #333;
+}
+
+body.dark-mode tr:hover {
+    background-color: #2a2a2a;
+}
+
+/* FIX ZEBRA ROWS IN DARK MODE */
+body.dark-mode tr:nth-child(even) td {
+    background-color: #252525;
+    color: #e0e0e0;
+}
+
+body.dark-mode tr:nth-child(odd) td {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
 .container {
     width: 90%;
     margin: auto;
@@ -56,6 +96,11 @@ h1 {
     border-radius: 8px;
     flex: 1;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #ffffff;
 }
 
 .card h2 {
@@ -118,3 +163,4 @@ tbody tr:hover {
 .insights-section ul {
     padding-left: 20px;
 }
+
