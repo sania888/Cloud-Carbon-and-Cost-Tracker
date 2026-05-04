@@ -35,6 +35,11 @@ async function loadData() {
         costs.push(item.cost_usd);
     });
 
+    const emissions = [];
+
+    result.data.forEach(item => {
+        emissions.push(item.emission_kg);
+    });
 
     // plotly bar chart (Cost by service)
     const plotData = [
@@ -52,6 +57,22 @@ async function loadData() {
     };
 
     Plotly.newPlot("cost-chart", plotData, layout);
+
+    const emissionPlotData = [
+        {
+            x: services,
+            y: emissions,
+            type: "bar"
+        }
+    ];
+
+    const emissionLayout = {
+        title: "Emissions by Service Plot",
+        xaxis: { title: "Service" },
+        yaxis: { title: "Emissions (kg)" }
+    };
+
+    Plotly.newPlot("emission-chart", emissionPlotData, emissionLayout);
 
     // hid loading
     loading.style.display = "none";
