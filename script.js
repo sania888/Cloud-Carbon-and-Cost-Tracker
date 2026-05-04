@@ -87,10 +87,17 @@ async function loadData() {
         }
     ];
 
+    const isDark = document.body.classList.contains("dark-mode")
+
     const layout = {
         title: "Cost by Service Plot",
         xaxis: { title: "Service" },
-        yaxis: { title: "Cost (USD)" }
+        yaxis: { title: "Cost (USD)" },
+        paper_bgcolor: isDark ? "#1e1e1e" : "#ffffff",
+        plot_bgcolor: isDark ? "#1e1e1e" : "#ffffff",
+        font: {
+            color: isDark ? "#ffffff" : "#000000"
+        }
     };
 
     Plotly.newPlot("cost-chart", plotData, layout);
@@ -112,12 +119,17 @@ async function loadData() {
     const emissionLayout = {
         title: "Emissions by Service Plot",
         xaxis: { title: "Service" },
-        yaxis: { title: "Emissions (kg)" }
+        yaxis: { title: "Emissions (kg)" },
+        paper_bgcolor: isDark ? "#1e1e1e" : "#ffffff",
+        plot_bgcolor: isDark ? "#1e1e1e" : "#ffffff",
+        font: {
+            color: isDark ? "#ffffff" : "#000000"
+        }
     };
 
     Plotly.newPlot("emission-chart", emissionPlotData, emissionLayout);
 
-    console.log("INSIGHTS DEBUG:", result.data);
+
     // INSIGHTS LOGIC
     let maxCostService = "";
     let maxCost = 0;
