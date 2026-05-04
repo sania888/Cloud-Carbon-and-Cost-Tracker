@@ -34,6 +34,7 @@ async function loadData() {
         return;
     }
 
+
     result.data.forEach(item => {
         const tr = document.createElement("tr");
         
@@ -115,15 +116,14 @@ async function loadData() {
 
     Plotly.newPlot("emission-chart", emissionPlotData, emissionLayout);
 
-
+    console.log("INSIGHTS DEBUG:", result.data);
     // INSIGHTS LOGIC
     let maxCostService = "";
     let maxCost = 0;
 
     let maxEmissionService = "";
     let maxEmission = 0;
-    
-    console.log("INSIGHTS DEBUG:", result.data);
+      
     result.data.forEach(item => {
         // highest cose
         if (item.cost_usd > maxCost) {
