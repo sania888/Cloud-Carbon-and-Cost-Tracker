@@ -4,6 +4,7 @@ from app.database.connection import get_db
 from app.services.usage_service import get_all_usage, export_usage_to_csv, export_usage_to_pdf
 from typing import Optional
 from fastapi.responses import StreamingResponse
+from app.services.data_generator import generate_dynamic_data
 
 router = APIRouter()
 
@@ -36,11 +37,8 @@ async def upload_file(
 @router.get("/all")
 def get_usage_data(db = Depends(get_db)):
     data = get_all_usage(db)
-    
-    return {
-        "count": len(data),
-        "data": [
-            {
+    base_data = [
+        {
                 "service": d.service,
                 "region": d.region,
                 "usage_hours": d.usage_hours,
@@ -49,7 +47,13 @@ def get_usage_data(db = Depends(get_db)):
                 "emission_kg": d.emission_kg
             }
             for d in data
-        ]
+    ]
+    
+    # Applying dynamic generator
+    dynamic_data = [generate_dynamic_data(record) for record in base_data]
+    return {
+        "count": len(dynamic_data),
+        "data": dynamic_data
     }
 
 
