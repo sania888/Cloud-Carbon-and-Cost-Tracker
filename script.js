@@ -26,36 +26,46 @@ async function loadData() {
     const response = await fetch(url); // FETCH DATA
     const result = await response.json();  // THEN PARSE
 
-    // INSIGHTS LOGIC
-    let maxCostService = "";
-    let maxCost = 0;
+    // hid loading
+    loading.style.display = "none";
 
-    let maxEmissionService = "";
-    let maxEmission = 0;
+    if (!result.data || result.data.length === 0) {
+        noData.style.display = "block";
+        return;
+    }
 
     result.data.forEach(item => {
-        // highest cose
-        if (item.cost_usd > maxCost) {
-            maxCost = item.cost_usd;
-            maxCostService = item.service;
-        }
-
-        // highest emission
-        if (item.emission_kg > maxEmission) {
-            maxEmission = item.emission_kg;
-            maxEmissionService = item.service;
-        }
+        const tr = document.createElement("tr");
+        
+        tr.innerHTML =`
+            <td>${item.service}</td>
+            <td>${item.region}</td>
+            <td>${item.usage_hours}</td>
+            <td>${item.usage_type}</td>
+            <td>${item.cost_usd}</td>
+            <td>${item.emission_kg}</td>
+        `;
+        tableBody.appendChild(tr);
     });
 
-    const totalServices = result.data.length;
+    let summaryUrl = `${API_BASE}/usage/summary`;
+    if (params.length > 0) {
+        summaryUrl += "?" + params.join("&");
+    }
+    // FETCH SUMMARY DATA
+    const summaryResponse = await fetch(summaryUrl);
+    const summaryResult = await summaryResponse.json();
 
-    const insightList = document.getElementById("insights-list");
+    // Update UI
+    document.getElementById("total-cost").innerText = summaryResult.total_cost;
+    document.getElementById("total-emissions").innerText = summaryResult.total_emissions;
 
-    insightList.innerHTML = `
-        <li>Highest Cost Service: ${maxCostService} ($${maxCost})</li>
-        <li>Highest Emission Service: ${maxEmissionService} (${maxEmission} kg)</li>
-        <li>Total Services Used: ${totalServices}</li>
-    `;
+    console.log(result); // OPTIONAL DEBUG
+
+    if(!result.data) {
+        console.error("Data not found in response");
+        return;
+    }
 
     // prepare plot data
     const services = [];
@@ -105,46 +115,38 @@ async function loadData() {
 
     Plotly.newPlot("emission-chart", emissionPlotData, emissionLayout);
 
-    // hid loading
-    loading.style.display = "none";
 
-    if (!result.data || result.data.length === 0) {
-        noData.style.display = "block";
-        return;
-    }
+    // INSIGHTS LOGIC
+    let maxCostService = "";
+    let maxCost = 0;
 
+    let maxEmissionService = "";
+    let maxEmission = 0;
+    
+    console.log("INSIGHTS DEBUG:", result.data);
     result.data.forEach(item => {
-        const tr = document.createElement("tr");
-        
-        tr.innerHTML =`
-            <td>${item.service}</td>
-            <td>${item.region}</td>
-            <td>${item.usage_hours}</td>
-            <td>${item.usage_type}</td>
-            <td>${item.cost_usd}</td>
-            <td>${item.emission_kg}</td>
-        `;
-        tableBody.appendChild(tr);
+        // highest cose
+        if (item.cost_usd > maxCost) {
+            maxCost = item.cost_usd;
+            maxCostService = item.service;
+        }
+
+        // highest emission
+        if (item.emission_kg > maxEmission) {
+            maxEmission = item.emission_kg;
+            maxEmissionService = item.service;
+        }
     });
 
-    let summaryUrl = `${API_BASE}/usage/summary`;
-    if (params.length > 0) {
-        summaryUrl += "?" + params.join("&");
-    }
-    // FETCH SUMMARY DATA
-    const summaryResponse = await fetch(summaryUrl);
-    const summaryResult = await summaryResponse.json();
+    const totalServices = result.data.length;
 
-    // Update UI
-    document.getElementById("total-cost").innerText = summaryResult.total_cost;
-    document.getElementById("total-emissions").innerText = summaryResult.total_emissions;
+    const insightList = document.getElementById("insights-list");
 
-    console.log(result); // OPTIONAL DEBUG
-
-    if(!result.data) {
-        console.error("Data not found in response");
-        return;
-    }
+    insightList.innerHTML = `
+        <li>Highest Cost Service: ${maxCostService} ($${maxCost})</li>
+        <li>Highest Emission Service: ${maxEmissionService} (${maxEmission} kg)</li>
+        <li>Total Services Used: ${totalServices}</li>
+    `;
 }
 
 
