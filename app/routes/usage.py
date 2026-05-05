@@ -5,6 +5,7 @@ from app.services.usage_service import get_all_usage, export_usage_to_csv, expor
 from typing import Optional
 from fastapi.responses import StreamingResponse
 from app.services.data_generator import generate_dynamic_data
+from app.services.scheduler import history
 
 router = APIRouter()
 
@@ -133,3 +134,11 @@ def export_pdf(
         media_type="application/pdf",
         headers={"Content-Disposition": "attachment; filename=usage_report.pdf"}
     )
+
+
+@router.get("/history")
+def get_history():
+    return {
+        "count": len(history),
+        "data": history
+    }
