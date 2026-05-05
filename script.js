@@ -210,7 +210,10 @@ async function loadTrendCharts() {
 
     const data = result.data;
 
-    if(!data || data.length === 0) return;
+    if(!data || data.length === 0) {
+        console.log("Waiting for history...");
+        return;
+    }
 
 
     // Extract values
@@ -237,4 +240,5 @@ async function loadTrendCharts() {
     };
 
     Plotly.newPlot('trend-chart', [trace1, trace2], layout)
+    console.log("History API:", result);
 }

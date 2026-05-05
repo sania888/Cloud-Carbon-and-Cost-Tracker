@@ -13,8 +13,13 @@ def start_schelduler():
     def run():
         print("Scheduler thread running...")
         while True:
-            db = next(get_db())
-            db_records = get_all_usage(db)
+            db_gen = get_db()
+            db = next(db_gen)
+
+            try:
+                db_records = get_all_usage(db)
+            finally:
+                db_gen.close()
             raw_data = [
                 {
                     "service": r.service,
