@@ -160,8 +160,6 @@ async function loadData() {
         <li><strong>Highest Emission Service:</strong> ${maxEmissionService} (${maxEmission} kg)</li>
         <li><strong>Total Services Used:</strong> ${totalServices}</li>
     `;
-
-    loadTrendCharts();
 }
 
 
@@ -200,45 +198,3 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.toggle("dark-mode");
     });
 });
-
-
-async function loadTrendCharts() {
-    const API_BASE = "https://cloud-carbon-and-cost-tracker.onrender.com";
-
-    const response = await fetch(`${API_BASE}/usage/history`);
-    const result = await response.json();
-
-    const data = result.data;
-
-    if(!data || data.length === 0) {
-        console.log("Waiting for history...");
-        return;
-    }
-
-
-    // Extract values
-    const timestamps = data.map(d => new DataTransfer(d.timestamps * 1000).toLocaleTimeString());
-    const costs = data.map(d => d.total_cost);
-    const emissions = data.map(d => d.total_emissions)
-
-    const trace1 = {
-        x: timestamps,
-        y: costs,
-        mode: 'lines+markers',
-        name: 'Total Cost'
-    };
-
-    const trace2 = {
-        x: timestamps,
-        y: emissions,
-        mode: 'lines+markers',
-        name: 'Total Emission'
-    };
-
-    const layout = {
-        title: 'Costt & Emissions Over Time'
-    };
-
-    Plotly.newPlot('trend-chart', [trace1, trace2], layout)
-    console.log("History API:", result);
-}
