@@ -37,25 +37,44 @@ async def upload_file(
 
 @router.get("/all")
 def get_usage_data(db = Depends(get_db)):
-    data = get_all_usage(db)
-    base_data = [
-        {
-                "service": d.service,
-                "region": d.region,
-                "usage_hours": d.usage_hours,
-                "usage_type": d.usage_type,
-                "cost_usd": d.cost_usd,
-                "emission_kg": d.emission_kg
-            }
-            for d in data
-    ]
+    try:
+        data = get_all_usage(db)
+        
+        return {
+            "count": len(data),
+            "data": [
+                {
+                    "service": d.service,
+                    "region": d.region,
+                    "usage_hours": d.usage_hours,
+                    "usage_type": d.usage_type,
+                    "cost_usd": d.cost_usd,
+                    "emission_kg": d.emission_kg
+                }
+                for d in data
+            ]
+        }
+    except Exception as e:
+        print("ERROR IN /usage/all:", str(e))
+        return {"error": str(e)}
+    # base_data = [
+    #     {
+    #             "service": d.service,
+    #             "region": d.region,
+    #             "usage_hours": d.usage_hours,
+    #             "usage_type": d.usage_type,
+    #             "cost_usd": d.cost_usd,
+    #             "emission_kg": d.emission_kg
+    #         }
+    #         for d in data
+    # ]
     
     # Applying dynamic generator
-    dynamic_data = [generate_dynamic_data(record) for record in base_data]
-    return {
-        "count": len(dynamic_data),
-        "data": dynamic_data
-    }
+    # dynamic_data = [generate_dynamic_data(record) for record in base_data]
+    # return {
+    #     "count": len(dynamic_data),
+    #     "data": dynamic_data
+    # }
 
 
 @router.get("/")
