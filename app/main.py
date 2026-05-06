@@ -29,4 +29,4 @@ def root():
 @app.on_event("startup")
 def start_background_tasks():
     print("Starting scheduler...")
-    start_schelduler()
+    # start_schelduler()
