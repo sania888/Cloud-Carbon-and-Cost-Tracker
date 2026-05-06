@@ -41,9 +41,6 @@ def generate_dynamic_data(records):
         emission = record["emission_kg"]
         service = record["service"]
     
-    # simulate growth
-    
-    
         # SERVICE-BASED GROWTH
         if service == "EC2":
             factor  = random.uniform(0.01, 0.03)
