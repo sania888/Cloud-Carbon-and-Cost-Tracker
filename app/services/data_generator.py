@@ -37,8 +37,8 @@ def generate_dynamic_data(records):
     
     for record in records:
         usage = record["usage_hours"]
-        #cost = record["cost_usd"]
-        #emission = record["emission_kg"]
+        cost = record["cost_usd"]
+        emission = record["emission_kg"]
         service = record["service"]
     
     # simulate growth
