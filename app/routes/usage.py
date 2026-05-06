@@ -35,11 +35,35 @@ async def upload_file(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# @router.get("/all")
+# def get_usage_data(db = Depends(get_db)):
+#     data = get_all_usage(db)
+#     base_data = [
+#         {
+#                 "service": d.service,
+#                 "region": d.region,
+#                 "usage_hours": d.usage_hours,
+#                 "usage_type": d.usage_type,
+#                 "cost_usd": d.cost_usd,
+#                 "emission_kg": d.emission_kg
+#             }
+#             for d in data
+#     ]
+    
+#     # Applying dynamic generator
+#     dynamic_data = generate_dynamic_data(base_data)
+#     return {
+#         "count": len(dynamic_data),
+#         "data": dynamic_data
+#     }
+
 @router.get("/all")
 def get_usage_data(db = Depends(get_db)):
-    data = get_all_usage(db)
-    base_data = [
-        {
+    try:
+        data = get_all_usage(db)
+
+        base_data = [
+            {
                 "service": d.service,
                 "region": d.region,
                 "usage_hours": d.usage_hours,
@@ -48,15 +72,27 @@ def get_usage_data(db = Depends(get_db)):
                 "emission_kg": d.emission_kg
             }
             for d in data
-    ]
-    
-    # Applying dynamic generator
-    dynamic_data = generate_dynamic_data(base_data)
-    return {
-        "count": len(dynamic_data),
-        "data": dynamic_data
-    }
+        ]
 
+        dynamic_data = generate_dynamic_data(base_data)
+
+        return {
+            "count": len(dynamic_data),
+            "data": dynamic_data
+        }
+
+    except Exception as e:
+        import traceback
+
+        error_message = traceback.format_exc()
+
+        print("FULL ERROR:")
+        print(error_message)
+
+        return {
+            "error": str(e),
+            "traceback": error_message
+        }
 
 @router.get("/")
 def get_usage_filtered(
