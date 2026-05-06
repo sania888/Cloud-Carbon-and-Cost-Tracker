@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadTrendCharts() {
     const API_BASE = "https://cloud-carbon-and-cost-tracker.onrender.com";
 
-    const response = await fetch(`${API_BASE}/usuage/history`);
+    const response = await fetch(`${API_BASE}/usage/history`);
     const result = await response.json();
 
     const data = result.data;
